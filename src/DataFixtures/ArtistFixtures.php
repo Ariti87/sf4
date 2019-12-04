@@ -3,23 +3,34 @@
 namespace App\DataFixtures;
 
 use App\Entity\Artist;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ArtistFixtures extends Fixture
+class ArtistFixtures extends BaseFixture
 {
-    public function load(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-        for ($i=0;$i<=50;$i++){
-            $artist =(new Artist())
-                ->setName('John Doe n°' . $i)
-                ->setDescription('Test des fixtures');
+        // Générer 50 artistes
+        $this->createMany(50,function (){
+           // Construction du nom d'artiste
+            $name = $this->faker->randomElement(['DJ','MC','Lil','']);
+            $name .= $this->faker->firstName;
+            $name .= $this->faker->randomElement([
+               ' ' . $this->faker->realText(),
+                ' aka ' . $this->faker->domainWord,
+                ' & The ' . $this->faker->lastName,
+                ''
+            ]);
 
-            $manager->persist($artist);
-        }
+            // instaciation de l'entite
+            $artist = (new Artist())
+                ->setName($name)
+                ->setDescription($this->faker->realText(50));
 
+            // Retourner l'entite
+            return $artist;
+        });
+
+        // Enregistrer les entités en BDD
         $manager->flush();
     }
 }

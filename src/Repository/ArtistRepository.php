@@ -19,6 +19,18 @@ class ArtistRepository extends ServiceEntityRepository
         parent::__construct($registry, Artist::class);
     }
 
+    /**
+     * Obtenor la liste des DJs
+     */
+    public function findDjs()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.name LIKE :dj_name')
+            ->setParameter('dj_name', 'DJ%')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Artist[] Returns an array of Artist objects
     //  */
