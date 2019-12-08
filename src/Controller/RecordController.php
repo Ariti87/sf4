@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Record;
+use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,10 +17,10 @@ class RecordController extends AbstractController
     /**
      * @Route("/{id}",name="page")
      */
-    public function index($id)
+    public function index(Record $record)
     {
-        return $this->json([
-           'id' => $id,
+        return $this->render('record/record_page.html.twig', [
+            'record' => $record
         ]);
     }
 }
