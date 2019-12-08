@@ -22,18 +22,9 @@
             {# formulaire de connexion #}
             <form method="post">
                 <div class="field">
-                    <label class="label" for="inputEmail">Email</label>
+                    <label class="label" for="inputEmail">Email ou Pseudo</label>
                     <div class="control">
-                        <input class="input" type="email" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>
-                    </div>
-                </div>
-
-                <h2>Ou</h2>
-
-                <div class="field">
-                    <label class="label" for="inputPseudo">Pseudo</label>
-                    <div class="control">
-                        <input class="input" value="{{ last_username }}" name="pseudo" id="inputPseudo" required autofocus>
+                        <input class="input" value="{{ last_username }}" name="email" name="pseudo" id="inputEmail" >
                     </div>
                 </div>
 

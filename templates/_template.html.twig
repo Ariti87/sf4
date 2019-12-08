@@ -25,16 +25,33 @@
                 <a class="navbar-item" href="{{ path('ranking_news') }}">
                     Nouveautés
                 </a>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a class="navbar-item" href="{{ path('adminis') }}">
+                        Espace Administrateur
+                    </a>
+                {% endif %}
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary is-small" href="#">
-                            <strong>Inscription</strong>
-                        </a>
-                        <a class="button is-light is-small" href="#">
-                            Connexion
-                        </a>
+
+
+                        {% if is_granted('ROLE_USER') %}
+                            <a class="button is-primary is-small" href="#">
+                                <strong>Ici doit etre affiché le pseudo{{  }}</strong>
+                            </a>
+                            <a class="button is-light is-small" href="{{ path('app_logout') }}">
+                                Deconnexion
+                            </a>
+
+                        {% else %}
+                            <a class="button is-primary is-small" href="#">
+                                <strong>Inscription</strong>
+                            </a>
+                            <a class="button is-light is-small" href="{{ path('app_login') }}">
+                                Connexion
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
                 <a class="navbar-item">

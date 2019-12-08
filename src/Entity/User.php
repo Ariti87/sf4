@@ -118,6 +118,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+
     public function getPseudo(): ?string
     {
         return $this->pseudo;
@@ -129,4 +130,5 @@ class User implements UserInterface
 
         return $this;
     }
+
 }
