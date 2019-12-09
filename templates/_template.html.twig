@@ -1,8 +1,12 @@
 {# _template.html.twig #}
+
 {# hériter de base.html.twig #}
 {% extends "base.html.twig" %}
 
-{# écraser le contenu du bloc "body" défini dans le template parent #}
+{#
+    écraser le contenu du bloc "body"
+    défini dans le template parent
+#}
 {% block body %}
     <nav class="navbar has-background-grey-darker is-dark">
         <div class="navbar-brand">
@@ -11,12 +15,14 @@
                     <i class="fab fa-korvue"></i><b>RITIK</b>
                 </p>
             </a>
+
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
             </a>
         </div>
+
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
                 <a class="navbar-item" href="{{ path('artist_list') }}">
@@ -25,25 +31,19 @@
                 <a class="navbar-item" href="{{ path('ranking_news') }}">
                     Nouveautés
                 </a>
-                {% if is_granted("ROLE_ADMIN") %}
-                    <a class="navbar-item" href="{{ path('adminis') }}">
-                        Espace Administrateur
-                    </a>
-                {% endif %}
             </div>
+
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-
-
                         {% if is_granted('ROLE_USER') %}
-                            <a class="button is-primary is-small" href="#">
-                                <strong>Ici doit etre affiché le pseudo{{  }}</strong>
+                            <a href="#" class="button is-primary is-small">
+                                <i class="fas fa-user-circle"></i>
+                                {{ app.user.username }}
                             </a>
-                            <a class="button is-light is-small" href="{{ path('app_logout') }}">
-                                Deconnexion
+                            <a href="{{ path('app_logout') }}" class="button is-light is-small">
+                                Déconnexion
                             </a>
-
                         {% else %}
                             <a class="button is-primary is-small" href="#">
                                 <strong>Inscription</strong>
@@ -52,8 +52,16 @@
                                 Connexion
                             </a>
                         {% endif %}
+
+                        {% if is_granted('ROLE_EDITOR') %}
+                            <a href="{{ path('admin_dashboard') }}" class="button is-primary is-small">
+                                <i class="fas fa-shield-alt"></i>
+                                Back Office
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
+
                 <a class="navbar-item">
                     <form action="#">
                         <div class="field has-addons">
@@ -71,5 +79,6 @@
             </div>
         </div>
     </nav>
+
     {% block content %}{% endblock %}
 {% endblock %}

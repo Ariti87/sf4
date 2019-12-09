@@ -23,7 +23,9 @@ final class Version20191206160535 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE record CHANGE label_id label_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE user ADD pseudo VARCHAR(255) NULL, CHANGE roles roles JSON NOT NULL');
+        $this->addSql('ALTER TABLE user ADD pseudo VARCHAR(40) DEFAULT NULL');
+        $this->addSql('UPDATE user SET pseudo = CONCAT("user_", id)');
+        $this->addSql('ALTER TABLE user CHANGE pseudo pseudo VARCHAR(40) NOT NULL');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D64986CC499D ON user (pseudo)');
     }
 

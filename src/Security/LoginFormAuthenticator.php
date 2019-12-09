@@ -52,14 +52,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'pseudo' => $request->request->get('email'),
-            'email' => $request->request->get('email'),
+
+            'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['password']
+            $credentials['username']
 
         );
 
@@ -76,17 +76,18 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new InvalidCsrfTokenException();
         }
 
+        // Récupération de UserRepository
+        $userRepository = $this->entityManager->getRepository(User::class);
+        // Récupérer par email OU par pseudo
+        $user = $userRepository->findOneBy(['email' => $credentials['username']])
+            ?? $userRepository->findOneBy(['pseudo' => $credentials['username']]);
 
-        $userPseudo = $this->entityManager->getRepository(User::class)->findOneBy(['pseudo' => $credentials['pseudo']]);
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
-
-
-        if(!$user And !$userPseudo){
-            throw new CustomUserMessageAuthenticationException('Email/Nickname could not be found.');
-        }
-
-        elseif($userPseudo){
-            return $userPseudo;
+        if (!$user) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException(sprintf(
+                ' "%s" not found',
+                $credentials['username']
+            ));
         }
         return $user;
     }

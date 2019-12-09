@@ -7,10 +7,13 @@ namespace App\Controller\admin;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/admin", name="admin_")
+ */
 class DashboardController extends AbstractController
 {
     /**
-     * @Route("/admin", name="adminis")
+     * @Route("/", name="dashboard")
      */
     public function index(){
         return $this->render('admin/dashboard.html.twig');
